@@ -1,22 +1,25 @@
+#include <SPI.h>
+#include <LoRa.h>
 #include "LSIMUController.h"
-#include "LSLoraControllerTx.h"
 
 #define BUZZER_PIN          3
 #define BUILTIN_LED_PIN     13
 #define LOW_BEEP_PERIOD     600
 #define MEDIUM_BEEP_PERIOD  300
 #define HIGH_BEEP_PERIOD    100
+#define LORA_FREQUENCY      433E6
+#define LORA_PERIOD         1500
+#define DEVICE_ID           "@TEMON-1"
 
 
 /* Initialise objects and variables */
 LSIMUController     imu_controller  = LSIMUController();
-LSLoraControllerTx  lora_controller = LSLoraControllerTx();
-
-uint8_t       movement_level  = LSIMUController::NO_MOVEMENT;
-unsigned int  beep_period_t   = 0;
-unsigned long start_beep_t    = 0;
+uint8_t             movement_level  = LSIMUController::NO_MOVEMENT;
+unsigned int        beep_period_t   = 0;
+unsigned long       lora_period_t   = 0;
 
 
+/* Function(s) */
 void periodicBeep(unsigned int beep_period, bool state) {
   static unsigned long  last_t    = 0;
   static bool           alarm     = false;
@@ -35,9 +38,6 @@ void periodicBeep(unsigned int beep_period, bool state) {
 
 
 void setup() {
-  /* Begin serial communication */
-  Serial.begin(9600);
-
   /* Pinmoding */
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(BUILTIN_LED_PIN, OUTPUT);
@@ -46,7 +46,7 @@ void setup() {
   imu_controller.begin();
 
   /* Begin Lora */
-  lora_controller.begin();
+  LoRa.begin(LORA_FREQUENCY);
 }
 
 
@@ -75,7 +75,19 @@ void loop() {
       beep_period_t = 0;
       break;
   }
-  Serial.println(movement_level);
+
   /* Beeping */
   periodicBeep(beep_period_t, imu_controller.getAlarmState());
+
+  /* LoRa send */
+  unsigned long lora_time_diff = millis() - lora_period_t;
+  if(lora_time_diff > LORA_PERIOD) {
+    lora_period_t += lora_time_diff;
+    if(movement_level != LSIMUController::NO_MOVEMENT) {
+      LoRa.beginPacket();
+      LoRa.print(movement_level);
+      LoRa.print(DEVICE_ID);
+      LoRa.endPacket();
+    }
+  }
 }

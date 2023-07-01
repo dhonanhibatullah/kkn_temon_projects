@@ -1,6 +1,7 @@
 #ifndef _LSIMUCONTROLLER_H_
 #define _LSIMUCONTROLLER_H_
 
+#include <Arduino.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
@@ -19,7 +20,7 @@
 #define MED_MOV_VEL 3.0
 #define HI_MOV_VEL  5.1
 
-#define ALARM_STANDBY 2000
+#define ALARM_STANDBY 3000
 
 
 class LSIMUController {

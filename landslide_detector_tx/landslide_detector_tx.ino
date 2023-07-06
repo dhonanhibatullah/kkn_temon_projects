@@ -45,7 +45,7 @@ void setup() {
   /* Begin IMU */
   imu_controller.begin();
 
-  /* Begin Lora */
+  /* Begin LoRa */
   LoRa.begin(LORA_FREQUENCY);
 }
 

@@ -7,18 +7,19 @@
 #include <Wire.h>
 
 #define MPU_BEGIN_TRIAL         100
-#define ACCEL_COMP_FILTER_CONST 0.15
-#define GYRO_COMP_FILTER_CONST  0.15
-#define COMB_COMP_FILTER_CONST  0.72
+#define ACCEL_COMP_FILTER_CONST 0.3
+#define GYRO_COMP_FILTER_CONST  0.3
+#define COMB_COMP_FILTER_CONST  0.0
 #define MODIFIED_GRAVITY_CONST  9.48
+#define BEGIN_COUNT             1000
 
-#define LOW_MOV_ACC 0.25
-#define MED_MOV_ACC 0.42
-#define HI_MOV_ACC  0.74
+#define LOW_MOV_ACC 0.18
+#define MED_MOV_ACC 0.35
+#define HI_MOV_ACC  0.75
 
-#define LOW_MOV_VEL 1.6
-#define MED_MOV_VEL 3.0
-#define HI_MOV_VEL  5.1
+#define LOW_MOV_VEL 1.3
+#define MED_MOV_VEL 2.8
+#define HI_MOV_VEL  4.9
 
 #define ALARM_STANDBY 3000
 
@@ -37,14 +38,14 @@ class LSIMUController {
                       gyro[3]     = {0},
                       orn[3]      = {0};
 
-    float             accel_orn_x = 0,
-                      accel_orn_y = 0,
-                      gyro_orn_x  = 0, 
-                      gyro_orn_y  = 0, 
-                      gyro_orn_z  = 0;
+    float             accel_orn_x = 0.01,
+                      accel_orn_y = 0.01,
+                      gyro_orn_x  = 0.01, 
+                      gyro_orn_y  = 0.01, 
+                      gyro_orn_z  = 0.01;
 
-    float             abs_accel               = 0,
-                      abs_vel                 = 0;
+    float             abs_accel               = 0.01,
+                      abs_vel                 = 0.01;
 
     unsigned long     elapsed_t     = 0,
                       prev_t        = 0,
@@ -52,7 +53,9 @@ class LSIMUController {
 
     uint8_t           last_movement_state = 0;
 
-    bool              alarm_state = false;
+    bool              alarm_state   = false;
+
+    float             calcCalibError();
 
 
   public:

@@ -47,6 +47,7 @@ void setup() {
 
   /* Begin LoRa */
   LoRa.begin(LORA_FREQUENCY);
+  Serial.begin(9600);
 }
 
 
@@ -56,6 +57,7 @@ void loop() {
 
   /* Detect land movement */
   movement_level = imu_controller.getLandslideInfo();
+  // Serial.println(movement_level);
   
   /* Alarm system */
   switch(movement_level) {
@@ -78,6 +80,7 @@ void loop() {
 
   /* Beeping */
   periodicBeep(beep_period_t, imu_controller.getAlarmState());
+  // delay(300);
 
   /* LoRa send */
   unsigned long lora_time_diff = millis() - lora_period_t;

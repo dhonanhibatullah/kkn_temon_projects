@@ -8,7 +8,7 @@
 #define MEDIUM_BEEP_PERIOD  300
 #define HIGH_BEEP_PERIOD    100
 #define LORA_FREQUENCY      433E6
-#define ALARM_STANDBY       8000
+#define ALARM_STANDBY       60000
 
 
 /* Initialise objects and variables */

@@ -8,7 +8,7 @@
 #define MEDIUM_BEEP_PERIOD  300
 #define HIGH_BEEP_PERIOD    100
 #define LORA_FREQUENCY      433E6
-#define LORA_PERIOD         1500
+#define LORA_PERIOD         800
 #define DEVICE_ID           "@TEMON-1"
 
 

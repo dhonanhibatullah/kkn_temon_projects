@@ -8,29 +8,13 @@
 #define MEDIUM_BEEP_PERIOD  300
 #define HIGH_BEEP_PERIOD    100
 #define LORA_FREQUENCY      433E6
-#define ALARM_STANDBY       60000
+#define ESP8266_LORA_SS     15
+#define ESP8266_LORA_RST    16
+#define ESP8266_LORA_DIO0   2
 
 
 /* Initialise objects and variables */
 LSDisplay oled_display = LSDisplay();
-
-
-/* Function(s) */
-void periodicBeep(unsigned int beep_period, bool state) {
-  static unsigned long  last_t    = 0;
-  static bool           alarm     = false;
-  unsigned long         current_t = millis();
-  if(state) {
-    if(current_t - last_t > beep_period/2) {
-      alarm  = !alarm;
-      last_t = current_t;
-    }
-    digitalWrite(BUZZER_PIN, alarm);
-  }
-  else {
-    digitalWrite(BUZZER_PIN, LOW);
-  }
-}
 
 
 String receiveLoRaPacket() {
@@ -50,6 +34,7 @@ void setup() {
   /* Pinmoding */
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(BUILTIN_LED_PIN, OUTPUT);
+  LoRa.setPins(ESP8266_LORA_SS, ESP8266_LORA_RST, ESP8266_LORA_DIO0);
 
   /* Begin OLED */
   oled_display.begin();

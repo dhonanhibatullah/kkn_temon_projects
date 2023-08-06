@@ -43,7 +43,7 @@ void LSDisplay::idleDisplay() {
 
 void LSDisplay::periodicBeep(unsigned int beep_period, bool state) {
   static unsigned long  last_t    = 0;
-  static bool           alarm     = false;
+  static bool           alarm     = true;
   unsigned long         current_t = millis();
   if(state) {
     if(current_t - last_t > beep_period/2) {
@@ -53,7 +53,7 @@ void LSDisplay::periodicBeep(unsigned int beep_period, bool state) {
     digitalWrite(BUZZER_PIN, alarm);
   }
   else {
-    digitalWrite(BUZZER_PIN, LOW);
+    digitalWrite(BUZZER_PIN, HIGH);
   }
 }
 

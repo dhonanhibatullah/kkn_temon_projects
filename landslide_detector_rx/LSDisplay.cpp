@@ -69,7 +69,7 @@ void LSDisplay::displayLoRaInfo(const char* str) {
   /* Periodic beep sound */
   switch(last_movement_level) {
     case 0:
-      digitalWrite(BUZZER_PIN, LOW);
+      digitalWrite(BUZZER_PIN, HIGH);
       break;
 
     case 1:
@@ -93,7 +93,7 @@ void LSDisplay::displayLoRaInfo(const char* str) {
   if(at_idx == -1) {
     if(last_movement_level != 0 && (millis() - last_display_t >= ALARM_STANDBY)) {
       last_movement_level = 0;
-      digitalWrite(BUZZER_PIN, LOW);
+      digitalWrite(BUZZER_PIN, HIGH);
       display.clearDisplay();
       this->idleDisplay();
     }

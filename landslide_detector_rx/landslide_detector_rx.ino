@@ -2,8 +2,7 @@
 #include <LoRa.h>
 #include "LSDisplay.h"
 
-#define BUZZER_PIN          3
-#define BUILTIN_LED_PIN     13
+#define BUZZER_PIN          1
 #define LOW_BEEP_PERIOD     600
 #define MEDIUM_BEEP_PERIOD  300
 #define HIGH_BEEP_PERIOD    100
@@ -33,7 +32,7 @@ String receiveLoRaPacket() {
 void setup() {
   /* Pinmoding */
   pinMode(BUZZER_PIN, OUTPUT);
-  pinMode(BUILTIN_LED_PIN, OUTPUT);
+  digitalWrite(BUZZER_PIN, HIGH);
   LoRa.setPins(ESP8266_LORA_SS, ESP8266_LORA_RST, ESP8266_LORA_DIO0);
 
   /* Begin OLED */

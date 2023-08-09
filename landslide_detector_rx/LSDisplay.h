@@ -19,7 +19,7 @@
 #define MEDIUM_BEEP_PERIOD      300
 #define HIGH_BEEP_PERIOD        100
 
-#define BUZZER_PIN  3
+#define BUZZER_PIN  1
 
 
 class LSDisplay {
